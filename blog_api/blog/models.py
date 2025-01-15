@@ -2,6 +2,8 @@ from pymongo import MongoClient
 from django.conf import settings
 from datetime import datetime
 
+#Check if you can import from bson.objectid import ObjectId in the beginning.
+
 class BlogPost:
     def __init__(self):
         # Initialize the MongoDB client and database

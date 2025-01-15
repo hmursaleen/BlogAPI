@@ -95,6 +95,24 @@ DATABASES = {
 '''
 
 '''
+Django requires a valid DATABASES entry, even if you're not using the ORM.
+This provides a valid database engine and an in-memory database that won't persist data or 
+interfere with your PyMongo operations.
+Django's test framework and certain internal mechanisms require a valid DATABASES configuration.
+Using SQLite with an in-memory database:
+Satisfies Django's requirements for a database engine.
+Ensures no real database is used, keeping the focus on MongoDB.
+'''
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ":memory:",  # In-memory database for tests and compatibility
+    }
+}
+
+
+'''
 Since PyMongo is not an ORM, you cannot use Django's DATABASES setting for MongoDB. Instead, 
 you'll establish a connection manually.
 
