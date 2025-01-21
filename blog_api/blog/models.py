@@ -1,8 +1,8 @@
 from pymongo import MongoClient
 from django.conf import settings
 from datetime import datetime
+from bson.objectid import ObjectId
 
-#Check if you can import from bson.objectid import ObjectId in the beginning.
 
 class BlogPost:
     def __init__(self):
@@ -11,31 +11,27 @@ class BlogPost:
         self.db = client[settings.MONGO_DB_NAME]
         self.collection = self.db['blog_posts']
 
-    def create_post(self, title, content, category, tags):
-        post = {
-            'title': title,
-            'content': content,
-            'category': category,
-            'tags': tags,
-            'created_at': datetime.utcnow(),
-            'updated_at': datetime.utcnow(),
-        }
-        result = self.collection.insert_one(post)
+
+    def create(self, data):
+        data['created_at'] = datetime.utcnow()
+        data['updated_at'] = datetime.utcnow()
+        result = self.collection.insert_one(data)
         return result.inserted_id
 
-    def get_post(self, post_id):
-        from bson.objectid import ObjectId
+
+    def get(self, post_id):
         return self.collection.find_one({'_id': ObjectId(post_id)})
 
-    def update_post(self, post_id, updates):
-        from bson.objectid import ObjectId
-        updates['updated_at'] = datetime.utcnow()
+    def update(self, post_id, data):
+        data['updated_at'] = datetime.utcnow()
         result = self.collection.update_one(
-            {'_id': ObjectId(post_id)}, {'$set': updates}
+            {'_id': ObjectId(post_id)}, {'$set': data}
         )
         return result.modified_count
 
-    def delete_post(self, post_id):
-        from bson.objectid import ObjectId
+    def delete(self, post_id):
         result = self.collection.delete_one({'_id': ObjectId(post_id)})
         return result.deleted_count
+
+    def search(self, filters):
+        return self.collection.find(filters)
