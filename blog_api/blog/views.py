@@ -6,7 +6,6 @@ from rest_framework.exceptions import ParseError
 from bson.objectid import ObjectId
 from blog.models import BlogPost
 from blog.serializers import BlogPostSerializer
-#from django.utils.http import urlencode
 from bson.regex import Regex
 
 class MongoDBMixin:

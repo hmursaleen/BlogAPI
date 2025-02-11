@@ -23,7 +23,7 @@ class BlogPost:
         ]
 
         for index in indexes:
-            collection.create_index(index)
+            self.collection.create_index(index)
 
 
     def create(self, data):
