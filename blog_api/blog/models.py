@@ -1,4 +1,4 @@
-from pymongo import MongoClient, ASCENDING, DESCENDING
+from pymongo import MongoClient
 from django.conf import settings
 from datetime import datetime
 from bson.objectid import ObjectId
@@ -10,20 +10,6 @@ class BlogPost:
         client = MongoClient(settings.MONGO_URI)
         self.db = client[settings.MONGO_DB_NAME]
         self.collection = self.db['blog_posts']
-        self._create_indexes()
-
-    
-    def _create_indexes(self):
-        indexes = [
-            ("id", ASCENDING),
-            ("title", ASCENDING),
-            ("created_at", DESCENDING),
-            ("category", ASCENDING),
-            ("tags", ASCENDING),
-        ]
-
-        for index in indexes:
-            self.collection.create_index(index)
 
 
     def create(self, data):
@@ -49,7 +35,6 @@ class BlogPost:
 
     def search(self, filters):
         return self.collection.find(filters)
-
 
 
 '''
