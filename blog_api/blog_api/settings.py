@@ -148,7 +148,7 @@ mongo_db = mongo_client[MONGO_DB_NAME]
 
 try:
     mongo_client.admin.command("ping")
-    print("MongoDB connection established successfully!")
+    #print("MongoDB connection established successfully!")
 except ServerSelectionTimeoutError as e:
     print(f"Error: Unable to connect to MongoDB: {e}")
 
@@ -178,7 +178,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Dhaka'
 
 USE_I18N = True
 
